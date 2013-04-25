@@ -78,28 +78,6 @@ namespace AntichamberSaveWatcher
 
 		private static void update(object sender, FileSystemEventArgs e)
 		{
-			/*List<string> previousTriggers = new List<string>(save.SavedTriggers);
-			save.Reload(true);
-
-			bool newTriggers = false;
-			//Console.WriteLine("\nReloaded (" + save.TimeLeft.ToString() + ")");
-
-			foreach (string trigger in save.SavedTriggers)
-			{
-				if (!previousTriggers.Contains(trigger))
-				{
-					if (!newTriggers)
-					{
-						newTriggers = true;
-						Console.WriteLine("Reloaded (" + save.TimeLeft.ToString() + ")");
-					}
-					Console.WriteLine("New trigger: " + trigger);
-				}
-			}
-
-			if (newTriggers)
-				Console.WriteLine();*/
-
 			List<int> previousSigns = new List<int>();
 			foreach (Trigger trigger in save.SavedTriggers)
 				if (trigger.SignNum > 0)
