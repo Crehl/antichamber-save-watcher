@@ -37,11 +37,16 @@ namespace AntichamberSaveWatcher
 
 		public AntichamberSave(string fullPath)
 		{
+			SavedPickups = new List<Pickup>();
+			SavedSecrets = new List<Secret>();
+			SavedTriggers = new List<Trigger>();
+
 			Path = fullPath;
-			Reload(true);
+			if (!Reload(true))
+				Console.WriteLine("Unable to load save file - is the path correct?");
 		}
 
-		public void Reload(bool retry = false, int sleepTime = 100)
+		public bool Reload(bool retry = false, int sleepTime = 100)
 		{
 			do
 			{
@@ -56,9 +61,11 @@ namespace AntichamberSaveWatcher
 
 				readFile();
 				stream.Close();
-				return;
+				return true;
 
 			} while (retry);
+
+			return false;
 		}
 
 		private void readFile()

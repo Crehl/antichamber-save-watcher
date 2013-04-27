@@ -28,6 +28,9 @@ namespace AntichamberSaveWatcher
 				Console.SetWindowSize(115, 8);
 			}
 
+			if (!trackCubes && trackSigns)
+				Console.WriteLine("Currently tracking nothing - are the command line arguments correct?");
+
 			save = new AntichamberSave(path + file);
 
 			FileSystemWatcher fsw = new FileSystemWatcher(path, file);
@@ -87,7 +90,11 @@ namespace AntichamberSaveWatcher
 			foreach (Secret secret in save.SavedSecrets)
 				previousCubes.Add(secret.FullName);
 
-			save.Reload();
+			if (!save.Reload())
+			{
+				Console.WriteLine("Unable to reload save file.");
+				return;
+			}
 
 			int signs = previousSigns.Count + 1;
 			if (signs == 1)
