@@ -41,7 +41,7 @@ namespace AntichamberSaveWatcher
 			Reload(true);
 		}
 
-		public void Reload(bool retry = false, int sleepTime = 10)
+		public void Reload(bool retry = false, int sleepTime = 100)
 		{
 			do
 			{
