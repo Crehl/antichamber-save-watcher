@@ -42,7 +42,7 @@ namespace AntichamberSaveWatcher
 			SavedTriggers = new List<Trigger>();
 
 			Path = fullPath;
-			if (!Reload(true))
+			if (!Reload(true) && Program.ShowDebug)
 				Console.WriteLine("Unable to load save file - is the path correct?");
 		}
 

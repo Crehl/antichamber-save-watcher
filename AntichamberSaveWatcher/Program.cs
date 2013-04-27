@@ -17,6 +17,9 @@ namespace AntichamberSaveWatcher
 		static bool noResize = false;
 		static bool trackSigns = true;
 		static bool trackCubes = false;
+		static bool trackGuns = false;
+
+		public static bool ShowDebug = false;
 		
 		static void Main(string[] args)
 		{
@@ -61,6 +64,14 @@ namespace AntichamberSaveWatcher
 					case "--cubes":
 						trackCubes = true;
 						break;
+					case "-g":
+					case "--guns":
+						trackGuns = true;
+						break;
+					case "-d":
+					case "--debug":
+						ShowDebug = true;
+						break;
 					case "-f":
 					case "--file":
 						if (args.Length > i + 1)
@@ -90,9 +101,15 @@ namespace AntichamberSaveWatcher
 			foreach (Secret secret in save.SavedSecrets)
 				previousCubes.Add(secret.FullName);
 
+			List<Pickup.Gun> previousGuns = new List<Pickup.Gun>();
+			foreach (Pickup pickup in save.SavedPickups)
+				if (pickup.AssociatedGun != Pickup.Gun.Unknown)
+					previousGuns.Add(pickup.AssociatedGun);
+
 			if (!save.Reload())
 			{
-				Console.WriteLine("Unable to reload save file.");
+				if (ShowDebug)
+					Console.WriteLine("Unable to reload save file.");
 				return;
 			}
 
@@ -114,6 +131,13 @@ namespace AntichamberSaveWatcher
 				foreach (Secret secret in save.SavedSecrets)
 					if (!previousCubes.Contains(secret.FullName))
 						Console.WriteLine(String.Format("{0} - PINK CUBE {1}/13", new TimeSpan(0, 0, (int)save.PlayTime), ++cubes));
+			}
+
+			if (trackGuns)
+			{
+				foreach (Pickup pickup in save.SavedPickups)
+					if (pickup.AssociatedGun != Pickup.Gun.Unknown && !previousGuns.Contains(pickup.AssociatedGun))
+						Console.WriteLine(String.Format("{0} - GUN: {1}", new TimeSpan(0, 0, (int)save.PlayTime), pickup.AssociatedGun.ToString()));
 			}
 		}
 	}
