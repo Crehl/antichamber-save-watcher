@@ -31,7 +31,7 @@ namespace AntichamberSaveWatcher
 				Console.SetWindowSize(115, 8);
 			}
 
-			if (!trackCubes && trackSigns)
+			if (!trackCubes && !trackSigns && !trackGuns)
 				Console.WriteLine("Currently tracking nothing - are the command line arguments correct?");
 
 			save = new AntichamberSave(path + file);
