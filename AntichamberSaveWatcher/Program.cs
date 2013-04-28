@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
@@ -10,6 +11,7 @@ namespace AntichamberSaveWatcher
 {
 	class Program
 	{
+		static bool customPath = false;
 		static string path = @"C:\Program Files (x86)\Steam\SteamApps\common\Antichamber\Binaries\Win32\";
 		static string file = "SavedGame.bin";
 		static AntichamberSave save;
@@ -24,7 +26,10 @@ namespace AntichamberSaveWatcher
 		static void Main(string[] args)
 		{
 			Console.CursorVisible = false;
+			
 			parseArgs(args);
+			if (!customPath)
+				findPath();
 
 			if (!noResize)
 			{
@@ -80,6 +85,7 @@ namespace AntichamberSaveWatcher
 							string location = args[++i];
 							path = Path.GetDirectoryName(location) + Path.DirectorySeparatorChar;
 							file = Path.GetFileName(location);
+							customPath = true;
 						}
 						break;
 					case "-n":
@@ -89,6 +95,51 @@ namespace AntichamberSaveWatcher
 				}
 				i++;
 			}
+		}
+
+		static void findPath()
+		{
+			Process[] processes = Process.GetProcesses();
+			string fullName = "";
+			bool foundSteam = false;
+
+			foreach (Process process in processes)
+			{
+				
+				try
+				{
+					fullName = process.MainModule.FileName;
+				}
+				catch
+				{
+					continue;
+				}
+
+				if (fullName.EndsWith(@"Antichamber\Binaries\Win32\UDK.exe"))
+				{
+					string p = Path.GetDirectoryName(fullName) + Path.DirectorySeparatorChar;
+					if (File.Exists(Path.Combine(p, "SavedGame.bin")))
+					{
+						Console.WriteLine("Found running Antichamber process, setting path:\n" + p + "SavedGame.bin");
+						path = p;
+						return;
+					}
+				}
+				
+				if (fullName.EndsWith(@"Steam\Steam.exe"))
+				{
+					string p = Path.Combine(Path.GetDirectoryName(fullName), "SteamApps", "common", "Antichamber", "Binaries", "Win32") + Path.DirectorySeparatorChar;
+					if (File.Exists(Path.Combine(p, "SavedGame.bin")))
+					{
+						foundSteam = true;
+						path = p;
+						continue;
+					}
+				}
+			}
+
+			if (foundSteam)
+				Console.WriteLine("Found running Steam process, setting path:\n" + path + "SavedGame.bin");
 		}
 
 		private static void update(object sender, FileSystemEventArgs e)
