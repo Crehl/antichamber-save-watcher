@@ -48,6 +48,8 @@ namespace AntichamberSaveWatcher
 
 		public bool Reload(bool retry = false, int sleepTime = 100)
 		{
+			Thread.Sleep(50);
+
 			do
 			{
 				try
