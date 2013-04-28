@@ -42,11 +42,14 @@ namespace AntichamberSaveWatcher
 			SavedTriggers = new List<Trigger>();
 
 			Path = fullPath;
-			if (!Reload(true) && Program.ShowDebug)
-				Console.WriteLine("Unable to load save file - is the path correct?");
+			if (!File.Exists(Path))
+				Console.WriteLine("Save file doesn't seem to exist - is the path correct?");
+
+			if (!Reload(10) && Program.ShowDebug)
+				Console.WriteLine("Unable to load save file.");
 		}
 
-		public bool Reload(bool retry = false, int sleepTime = 100)
+		public bool Reload(int retries = 0, int sleepTime = 100)
 		{
 			Thread.Sleep(50);
 
@@ -69,7 +72,7 @@ namespace AntichamberSaveWatcher
 				stream.Close();
 				return true;
 
-			} while (retry);
+			} while (retries-- > 0);
 
 			return false;
 		}
