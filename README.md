@@ -35,4 +35,4 @@ While you can run ASW with now command line arguments, it is recommended you spe
 Default Behaviour
 -----------------
 
-If no save file is specified, ASW defaults to watching ``C:\Steam\SteamApps\common\Antichamber\Binaries\Win32\SavedGame.bin``. If no arguments at all are given, ASW defaults to just tracking signs.
+If no save file is specified, ASW defaults to watching ``C:\Program Files\Steam\SteamApps\common\Antichamber\Binaries\Win32\SavedGame.bin``. If no arguments at all are given, ASW defaults to just tracking signs.
