@@ -60,40 +60,53 @@ namespace AntichamberSaveWatcher
 			int i = 0;
 			while (i < args.Length)
 			{
-				switch (args[i])
+				string next = (i < args.Length - 1) ? args[i + 1] : "";
+
+				if (args[i].Length > 2 && args[i].StartsWith("--"))
+					handleFlag(args[i].Substring(2), next);
+				else if (args[i][0] == '-')
 				{
-					case "-s":
-					case "--signs":
-						trackSigns = true;
-						break;
-					case "-c":
-					case "--cubes":
-						trackCubes = true;
-						break;
-					case "-g":
-					case "--guns":
-						trackGuns = true;
-						break;
-					case "-d":
-					case "--debug":
-						ShowDebug = true;
-						break;
-					case "-f":
-					case "--file":
-						if (args.Length > i + 1)
-						{
-							string location = args[++i];
-							path = Path.GetDirectoryName(location) + Path.DirectorySeparatorChar;
-							file = Path.GetFileName(location);
-							customPath = true;
-						}
-						break;
-					case "-n":
-					case "--no-resize":
-						noResize = true;
-						break;
+					for (int j = 1; j < args[i].Length; j++)
+						handleFlag(args[i].Substring(j, 1), next);
 				}
+
 				i++;
+			}
+		}
+
+		static void handleFlag(string flag, string next)
+		{
+			switch (flag)
+			{
+				case "s":
+				case "signs":
+					trackSigns = true;
+					break;
+				case "c":
+				case "cubes":
+					trackCubes = true;
+					break;
+				case "g":
+				case "guns":
+					trackGuns = true;
+					break;
+				case "d":
+				case "debug":
+					ShowDebug = true;
+					break;
+				case "f":
+				case "file":
+					if (next != "")
+					{
+						path = Path.GetDirectoryName(next) + Path.DirectorySeparatorChar;
+						file = Path.GetFileName(next);
+						customPath = true;
+					}
+					break;
+				case "n":
+				case "no-resize":
+					noResize = true;
+					break;
 			}
 		}
 
