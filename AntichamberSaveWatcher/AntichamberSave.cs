@@ -56,7 +56,11 @@ namespace AntichamberSaveWatcher
 				{
 					stream = File.OpenRead(Path);
 				}
-				catch {
+				catch (Exception e) {
+
+					if (Program.ShowDebug)
+						Console.WriteLine(e.StackTrace);
+
 					Thread.Sleep(sleepTime);
 					continue;
 				}

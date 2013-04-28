@@ -92,52 +92,60 @@ namespace AntichamberSaveWatcher
 
 		private static void update(object sender, FileSystemEventArgs e)
 		{
-			List<int> previousSigns = new List<int>();
-			foreach (Trigger trigger in save.SavedTriggers)
-				if (trigger.SignNum > 0)
-					previousSigns.Add(trigger.SignNum);
-
-			List<string> previousCubes = new List<string>();
-			foreach (Secret secret in save.SavedSecrets)
-				previousCubes.Add(secret.FullName);
-
-			List<Pickup.Gun> previousGuns = new List<Pickup.Gun>();
-			foreach (Pickup pickup in save.SavedPickups)
-				if (pickup.AssociatedGun != Pickup.Gun.Unknown)
-					previousGuns.Add(pickup.AssociatedGun);
-
-			if (!save.Reload())
+			try
 			{
-				if (ShowDebug)
-					Console.WriteLine("Unable to reload save file.");
-				return;
-			}
-
-			int signs = previousSigns.Count + 1;
-			if (signs == 1)
-				Console.Clear();
-
-			int cubes = previousCubes.Count;
-
-			if (trackSigns)
-			{
+				List<int> previousSigns = new List<int>();
 				foreach (Trigger trigger in save.SavedTriggers)
-					if (trigger.SignNum > 0 && !previousSigns.Contains(trigger.SignNum))
-						Console.WriteLine(String.Format("{0} - SIGN {1}/120 - {2}", new TimeSpan(0, 0, (int)save.PlayTime), ++signs, trigger.SignText));
-			}
+					if (trigger.SignNum > 0)
+						previousSigns.Add(trigger.SignNum);
 
-			if (trackCubes)
-			{
+				List<string> previousCubes = new List<string>();
 				foreach (Secret secret in save.SavedSecrets)
-					if (!previousCubes.Contains(secret.FullName))
-						Console.WriteLine(String.Format("{0} - PINK CUBE {1}/13", new TimeSpan(0, 0, (int)save.PlayTime), ++cubes));
-			}
+					previousCubes.Add(secret.FullName);
 
-			if (trackGuns)
-			{
+				List<Pickup.Gun> previousGuns = new List<Pickup.Gun>();
 				foreach (Pickup pickup in save.SavedPickups)
-					if (pickup.AssociatedGun != Pickup.Gun.Unknown && !previousGuns.Contains(pickup.AssociatedGun))
-						Console.WriteLine(String.Format("{0} - GUN: {1}", new TimeSpan(0, 0, (int)save.PlayTime), pickup.AssociatedGun.ToString()));
+					if (pickup.AssociatedGun != Pickup.Gun.Unknown)
+						previousGuns.Add(pickup.AssociatedGun);
+
+				if (!save.Reload())
+				{
+					if (ShowDebug)
+						Console.WriteLine("Unable to reload save file.");
+					return;
+				}
+
+				int signs = previousSigns.Count + 1;
+				if (signs == 1)
+					Console.Clear();
+
+				int cubes = previousCubes.Count;
+
+				if (trackSigns)
+				{
+					foreach (Trigger trigger in save.SavedTriggers)
+						if (trigger.SignNum > 0 && !previousSigns.Contains(trigger.SignNum))
+							Console.WriteLine(String.Format("{0} - SIGN {1}/120 - {2}", new TimeSpan(0, 0, (int)save.PlayTime), ++signs, trigger.SignText));
+				}
+
+				if (trackCubes)
+				{
+					foreach (Secret secret in save.SavedSecrets)
+						if (!previousCubes.Contains(secret.FullName))
+							Console.WriteLine(String.Format("{0} - PINK CUBE {1}/13", new TimeSpan(0, 0, (int)save.PlayTime), ++cubes));
+				}
+
+				if (trackGuns)
+				{
+					foreach (Pickup pickup in save.SavedPickups)
+						if (pickup.AssociatedGun != Pickup.Gun.Unknown && !previousGuns.Contains(pickup.AssociatedGun))
+							Console.WriteLine(String.Format("{0} - GUN: {1}", new TimeSpan(0, 0, (int)save.PlayTime), pickup.AssociatedGun.ToString()));
+				}
+			}
+			catch (Exception exc)
+			{
+				if (Program.ShowDebug)
+					Console.WriteLine(exc.StackTrace);
 			}
 		}
 	}
