@@ -23,6 +23,7 @@ namespace AntichamberSaveWatcher
 		
 		static void Main(string[] args)
 		{
+			Console.CursorVisible = false;
 			parseArgs(args);
 
 			if (!noResize)
