@@ -13,25 +13,29 @@ namespace AntichamberSaveWatcher
 		public string Path { get; private set; }
 		private FileStream stream;
 
+		//Total of 8 magic bytes at the start of the file
 		public int MagicOne { get; private set; }
 		public int MagicTwo { get; private set; }
 
-		public float PlayTime { get; private set; }
+		public float PlayTime { get; private set; } //Play time in seconds
 		public TimeSpan TimeLeft
 		{
 			get
 			{
+				//Time remaining from the starting 1h30m
 				TimeSpan left = new TimeSpan(1, 30, 0);
 				left = left.Subtract(new TimeSpan(0, 0, (int)PlayTime));
+
 				if (left.TotalSeconds < 0)
 					left = new TimeSpan(0, 0, 0);
+
 				return left;
 			}
 		}
 
-		public List<Pickup> SavedPickups { get; private set; }
-		public List<Secret> SavedSecrets { get; private set; }
-		public List<Trigger> SavedTriggers { get; private set; }
+		public List<Pickup> SavedPickups { get; private set; } //Guns
+		public List<Secret> SavedSecrets { get; private set; } //Pink cubes
+		public List<Trigger> SavedTriggers { get; private set; } //Mostly signs, but also other stuff (map rooms?)
 
 		public bool HiddenSignHints { get; private set; }
 
@@ -45,12 +49,17 @@ namespace AntichamberSaveWatcher
 			if (!File.Exists(Path))
 				Console.WriteLine("Save file doesn't seem to exist - is the path correct?");
 
-			if (!Reload(5) && Program.ShowDebug)
-				Console.WriteLine("Unable to load save file.");
+			if (!Reload(5))
+			{
+				if (Program.ShowDebug)
+					Console.WriteLine("Unable to load save file.");
+			}
 		}
 
 		public bool Reload(int retries = 0, int sleepTime = 100)
 		{
+			//After an initial sleep, attempt to read the save file (retries + 1) times every sleepTime milliseconds.
+
 			Thread.Sleep(50);
 
 			do
@@ -179,6 +188,8 @@ namespace AntichamberSaveWatcher
 
 		private float readFloatProperty()
 		{
+			//IEEE754
+
 			long length = readLittleEndian(8);
 			uint ival = (uint)readLittleEndian(4);
 

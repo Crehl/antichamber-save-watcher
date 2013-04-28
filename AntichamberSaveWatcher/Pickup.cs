@@ -32,6 +32,7 @@ namespace AntichamberSaveWatcher
 		public Pickup(string name)
 		{
 			FullName = name;
+
 			if (GunNames.ContainsKey(name))
 				AssociatedGun = GunNames[name];
 			else

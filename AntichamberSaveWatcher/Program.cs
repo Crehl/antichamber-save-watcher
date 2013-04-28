@@ -28,6 +28,8 @@ namespace AntichamberSaveWatcher
 			Console.CursorVisible = false;
 			
 			parseArgs(args);
+
+			//If a path wasn't specified in a command line arg, attempt to find one from the running processes
 			if (!customPath)
 				findPath();
 
@@ -42,10 +44,12 @@ namespace AntichamberSaveWatcher
 
 			save = new AntichamberSave(path + file);
 
+			//Watch the save file for changes
 			FileSystemWatcher fsw = new FileSystemWatcher(path, file);
 			fsw.Changed += update;
 			fsw.EnableRaisingEvents = true;
 
+			//Quit program on enter
 			Console.ReadLine();
 		}
 
@@ -62,11 +66,11 @@ namespace AntichamberSaveWatcher
 			{
 				string next = (i < args.Length - 1) ? args[i + 1] : "";
 
-				if (args[i].Length > 2 && args[i].StartsWith("--"))
+				if (args[i].Length > 2 && args[i].StartsWith("--")) //e.g. --signs
 					handleFlag(args[i].Substring(2), next);
-				else if (args[i][0] == '-')
+				else if (args[i][0] == '-') //e.g. -s or -sc
 				{
-					for (int j = 1; j < args[i].Length; j++)
+					for (int j = 1; j < args[i].Length; j++) 
 						handleFlag(args[i].Substring(j, 1), next);
 				}
 
@@ -118,7 +122,7 @@ namespace AntichamberSaveWatcher
 
 			foreach (Process process in processes)
 			{
-				
+				//Don't always have permissions to read the FileName for a process
 				try
 				{
 					fullName = process.MainModule.FileName;
@@ -128,6 +132,7 @@ namespace AntichamberSaveWatcher
 					continue;
 				}
 
+				//Antichamber binary
 				if (fullName.EndsWith(@"Antichamber\Binaries\Win32\UDK.exe"))
 				{
 					string p = Path.GetDirectoryName(fullName) + Path.DirectorySeparatorChar;
@@ -139,6 +144,7 @@ namespace AntichamberSaveWatcher
 					}
 				}
 				
+				//Steam binary
 				if (fullName.EndsWith(@"Steam\Steam.exe"))
 				{
 					string p = Path.Combine(Path.GetDirectoryName(fullName), "SteamApps", "common", "Antichamber", "Binaries", "Win32") + Path.DirectorySeparatorChar;
@@ -159,20 +165,24 @@ namespace AntichamberSaveWatcher
 		{
 			try
 			{
+				//Store all the previous sign #s...
 				List<int> previousSigns = new List<int>();
 				foreach (Trigger trigger in save.SavedTriggers)
 					if (trigger.SignNum > 0)
 						previousSigns.Add(trigger.SignNum);
 
+				//... and cube (trigger) names...
 				List<string> previousCubes = new List<string>();
 				foreach (Secret secret in save.SavedSecrets)
 					previousCubes.Add(secret.FullName);
 
+				//... and guns.
 				List<Pickup.Gun> previousGuns = new List<Pickup.Gun>();
 				foreach (Pickup pickup in save.SavedPickups)
 					if (pickup.AssociatedGun != Pickup.Gun.Unknown)
 						previousGuns.Add(pickup.AssociatedGun);
 
+				//Reload the save file
 				if (!save.Reload())
 				{
 					if (ShowDebug)
@@ -188,6 +198,9 @@ namespace AntichamberSaveWatcher
 				}
 
 				int cubes = previousCubes.Count;
+
+				//Compare new signs, cubes, etc against the stored previous lists
+				//Write any new things to the console
 
 				if (trackSigns)
 				{

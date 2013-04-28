@@ -143,9 +143,11 @@ namespace AntichamberSaveWatcher
 			SignNum = 0;
 			SignText = "<Unknown>";
 
+			//Check that the map (very first part of the trigger name) is HazardIGFChinaSplit
 			string[] split = name.Split('.');
 			if (split.Length == 3 && split[0] == "HazardIGFChinaSplit")
 			{
+				//Number at the very end of the trigger name
 				string num = split[2].Substring(split[2].IndexOf('_') + 1);
 
 				int n;
