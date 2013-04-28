@@ -45,7 +45,7 @@ namespace AntichamberSaveWatcher
 			if (!File.Exists(Path))
 				Console.WriteLine("Save file doesn't seem to exist - is the path correct?");
 
-			if (!Reload(10) && Program.ShowDebug)
+			if (!Reload(5) && Program.ShowDebug)
 				Console.WriteLine("Unable to load save file.");
 		}
 
@@ -62,7 +62,7 @@ namespace AntichamberSaveWatcher
 				catch (Exception e) {
 
 					if (Program.ShowDebug)
-						Console.WriteLine(e.StackTrace);
+						Console.WriteLine(e);
 
 					Thread.Sleep(sleepTime);
 					continue;
