@@ -1,7 +1,7 @@
 Antichamber Save Watcher
 ========================
 
-Tool for displaying Antichamber save file updates (collected signs and pink cubes) in real time.
+Tool for displaying Antichamber save file updates (collected guns, signs, pink cubes) in real time.
 
 A (probably) up-to-date Win32 binary can be downloaded from https://sourceforge.net/projects/antichamber-sw/files/
 
@@ -19,6 +19,12 @@ While you can run ASW with now command line arguments, it is recommended you spe
       
       -c, --cubes
         Displays any new pink cubes collected
+    
+      -g, --guns
+        Displays any new guns collected
+      
+      -d, --debug
+        Shows certain error messages in the console (you'll want this off unless you're having problems)
       
       -n, --no-resize
         Prevents the window from resizing itself on startup.
