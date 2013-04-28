@@ -117,7 +117,10 @@ namespace AntichamberSaveWatcher
 
 				int signs = previousSigns.Count + 1;
 				if (signs == 1)
+				{
 					Console.Clear();
+					Console.WriteLine("00:00:00 - SIGN 1/120 - Every journey is a series of choices. The first is to begin the journey.");
+				}
 
 				int cubes = previousCubes.Count;
 
