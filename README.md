@@ -8,7 +8,9 @@ A (probably) up-to-date Win32 binary can be downloaded from https://sourceforge.
 Usage
 -----
 
-While you can run ASW with now command line arguments, it is recommended you specify the exact flags and (optionally) the path to Antichamber's save file you need. The possible arguments are as follows:
+While you can run ASW with now command line arguments, it is recommended you specify the exact flags and (optionally) the path to Antichamber's save file you need.
+Single letter arguments can be combined into one, e.g. ``-s -c -f "path"`` is equivalent to ``-scf "path"``.
+The possible arguments are as follows:
 
     Usage:
       AntichamberSaveWatcher [arguments]
@@ -34,5 +36,5 @@ While you can run ASW with now command line arguments, it is recommended you spe
 
 Default Behaviour
 -----------------
-
-If no save file is specified, ASW defaults to watching ``C:\Program Files\Steam\SteamApps\common\Antichamber\Binaries\Win32\SavedGame.bin``. If no arguments at all are given, ASW defaults to just tracking signs.
+If no save file is specified, ASW will attempt to find a running process matching either Steam or Antichamber (UDK). Failing that, ASW defaults to watching ``C:\Program Files (x86)\Steam\SteamApps\common\Antichamber\Binaries\Win32\SavedGame.bin``.
+If no arguments at all are given, ASW defaults to just tracking signs.
