@@ -204,16 +204,45 @@ namespace AntichamberSaveWatcher
 
 				if (trackSigns)
 				{
+					List<int> signNums = new List<int>();
+					int extraSigns = 0;
+
 					foreach (Trigger trigger in save.SavedTriggers)
+						signNums.Add(trigger.SignNum);
+
+					if (signNums.Contains(55) && signNums.Contains(120)) extraSigns++;
+					if (signNums.Contains(106) && signNums.Contains(142)) extraSigns++;
+					signs -= extraSigns;
+
+					string signExtra = extraSigns == 0 ? "" : " (+" + extraSigns.ToString() + ")";
+
+					foreach (Trigger trigger in save.SavedTriggers)
+					{
 						if (trigger.SignNum > 0 && !previousSigns.Contains(trigger.SignNum))
-							Console.WriteLine(String.Format("{0} - SIGN {1}/120 - {2}", new TimeSpan(0, 0, (int)save.PlayTime), ++signs, trigger.SignText));
+							Console.WriteLine(String.Format("{0} - SIGN {1}/120{3} - {2}", new TimeSpan(0, 0, (int)save.PlayTime), ++signs, trigger.SignText, signExtra));
+						
+					}
 				}
 
 				if (trackCubes)
 				{
+					List<string> secretNames = new List<string>();
+					int extraCubes = 0;
+
 					foreach (Secret secret in save.SavedSecrets)
+						secretNames.Add(secret.FullName);
+
+					if (secretNames.Contains("HazardSeamless.TheWorld:PersistentLevel.HazardSecretTile_15")) extraCubes++;
+					if (secretNames.Contains("HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardSecretTile_0")) extraCubes++;
+					cubes -= extraCubes;
+
+					string cubeExtra = extraCubes == 0 ? "" : " (+" + extraCubes.ToString() + ")";
+
+					foreach (Secret secret in save.SavedSecrets)
+					{
 						if (!previousCubes.Contains(secret.FullName))
-							Console.WriteLine(String.Format("{0} - PINK CUBE {1}/13", new TimeSpan(0, 0, (int)save.PlayTime), ++cubes));
+							Console.WriteLine(String.Format("{0} - PINK CUBE {1}/13{2}", new TimeSpan(0, 0, (int)save.PlayTime), ++cubes, cubeExtra));
+					}
 				}
 
 				if (trackGuns)
