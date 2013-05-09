@@ -7,7 +7,7 @@ namespace AntichamberSaveWatcher
 {
 	class Trigger
 	{
-		static Dictionary<int, string> Signs = new Dictionary<int, string>()
+		public static Dictionary<int, string> Signs = new Dictionary<int, string>()
 		{
 			{2, "Some outcomes are more favourable than others."},
 			{3, "The world is full of secret waiting to be uncovered."},
@@ -41,7 +41,6 @@ namespace AntichamberSaveWatcher
 			{38, "How we perceive a problem can change every time we see it."},
 			{39, "Old skills are useful even after we have learned new ones."},
 			{40, "The right answers may also be the most obvious ones."},
-			{41, "With forethought, things have a way of just working themselves out."},
 			{42, "Getting to the end requires tying off the loose ends."},
 			{43, "No matter how high you climb, there's always more to achieve."},
 			{44, "Look a little harder and you will find a way forward."},
@@ -63,6 +62,7 @@ namespace AntichamberSaveWatcher
 			{62, "What appears impossible may have a very simple answer."},
 			{64, "Signs may be helping you more than you realise."},
 			{65, "When you absorb your surroundings you may notice things you didn't see before."},
+			{66, "With forethought, things have a way of just working themselves out."},
 			{67, "There's nothing wrong with taking shortcuts."},
 			{69, "The choice doesn't matter if the outcome is the same."},
 			{70, "If you are missing information, it's easy to be mislead."},
