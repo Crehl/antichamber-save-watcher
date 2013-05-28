@@ -183,7 +183,7 @@ namespace AntichamberSaveWatcher
 						previousGuns.Add(pickup.AssociatedGun);
 
 				//Reload the save file
-				if (!save.Reload())
+				if (!save.Reload(5))
 				{
 					if (ShowDebug)
 						Console.WriteLine("Unable to reload save file.");
