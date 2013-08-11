@@ -9,7 +9,8 @@ namespace AntichamberSaveWatcher
 	{
 		public static readonly int[][] DuplicateSigns = {
 			new int[] { 55, 120 },
-			new int[] { 106, 142 }
+			new int[] { 106, 142 },
+			new int[] { 134, 135 }
 		};
 
 		public static Dictionary<int, string> Signs = new Dictionary<int, string>()
@@ -120,6 +121,7 @@ namespace AntichamberSaveWatcher
 			{131, "Rushing through a problem won't always give the right results."},
 			{133, "The more we complete, the harder it gets to find what we missed."},
 			{134, "The further we explore, the more conencted everything becomes."},
+			{135, "The further we explore, the more conencted everything becomes."},
 			{136, "Solving a problem may require approaching it from a different angle."},
 			{140, "Connecting the pieces can solve a puzzle."},
 			{142, "Peeking behind the curtains lets us see how everything works."},
