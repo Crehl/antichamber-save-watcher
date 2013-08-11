@@ -209,7 +209,7 @@ namespace AntichamberSaveWatcher
 					foreach (Trigger trigger in save.SavedTriggers)
 						signNums.Add(trigger.SignNum);
 
-					int extraSigns = numDuplicates(signNums);
+					int extraSigns = Trigger.CountDuplicates(signNums);
 					signs -= extraSigns;
 
 					string signExtra = extraSigns == 0 ? "" : " (+" + extraSigns.ToString() + ")";
@@ -255,24 +255,6 @@ namespace AntichamberSaveWatcher
 				if (Program.ShowDebug)
 					Console.WriteLine(exc.StackTrace);
 			}
-		}
-
-		private static int numDuplicates(List<int> signNums)
-		{
-			int total = 0;
-
-			for (int i = 0; i < Trigger.DuplicateSigns.Length; i++)
-			{
-				int count = 0;
-				foreach (int num in Trigger.DuplicateSigns[i])
-					if (signNums.Contains(num))
-						count++;
-
-				if (count > 1)
-					total += (count - 1);
-			}
-
-			return total;
 		}
 	}
 }

@@ -7,10 +7,20 @@ namespace AntichamberSaveWatcher
 {
 	class Trigger
 	{
-		public static readonly int[][] DuplicateSigns = {
-			new int[] { 55, 120 },
-			new int[] { 106, 142 },
-			new int[] { 134, 135 }
+		private static Tuple<string, int[]> duplicate(string desc, params int[] nums)
+		{
+			return new Tuple<string, int[]>(desc, nums);
+		}
+
+		public static readonly Tuple<string, int[]>[] Duplicates =
+		{
+			duplicate("Some things don't have a deeper meaning.",						55, 120),
+			duplicate("Peeking behind the curtains lets us see how everything works.",	106, 142),
+			duplicate("The further we explore, the more conencted everything becomes.",	35, 41, 134, 135),
+			duplicate("Some paths are straight forward.",								46, 89),
+			duplicate("Dig a little deeper and you may find something new.",			87, 148, 149, 150, 151, 152, 153, 154),
+			duplicate("Old solutions can apply to new problems.",						105, 107, 126, 127),
+			duplicate("We fall down when there is nothing to support us.",				60, 118)
 		};
 
 		public static Dictionary<int, string> Signs = new Dictionary<int, string>()
@@ -59,7 +69,6 @@ namespace AntichamberSaveWatcher
 			{52, "Taking the first step can be harder than the rest of the challenge."},
 			{53, "Live on your own watch, not someone else's."},
 			{54, "Complicated problems are easier when solved one step at a time."},
-			{55, "Some things don't have a deeper meaning."},
 			{56, "Patience has it's own rewards."},
 			{57, "At times we may need to view the world from someone else's perspective."},
 			{58, "We often fall into things when we least expect."},
@@ -86,9 +95,7 @@ namespace AntichamberSaveWatcher
 			{83, "The right decisions at the right time will get you where you want to go."},
 			{84, "The best solutions may still be the most primitive ones."},
 			{86, "The world rarely changes when we watch to see it happen."},
-			{87, "Dig a little deeper and you may find something new."},
 			{88, "Too much curiosity can get the best of us."},
-			{89, "Some paths are straight forward."},
 			{91, "Similar problems can have entirely different solutions."},
 			{92, "A window of oppurtunity can lead to new places if you're willing to take a closer look."},
 			{93, "Some tasks require a lot of care and observation."},
@@ -98,7 +105,6 @@ namespace AntichamberSaveWatcher
 			{100, "We move on when there is nothing left to learn."},
 			{103, "You can't do everything yourself."},
 			{104, "Solving a problem may require using abilities that we didn't know we had."},
-			{106, "Peeking behind the curtains lets us see how everything works."},
 			{108, "There's no need to take apart what already works."},
 			{109, "The end may come before we were ready to get there."},
 			{110, "A path may not be right or wrong. It may just be different."},
@@ -106,25 +112,19 @@ namespace AntichamberSaveWatcher
 			{114, "Going a certain way may require building your own path."},
 			{115, "Some paths are clearer than others."},
 			{116, "Mastering a skill requires practice."},
-			{118, "We fall down when there is nothing to support us."},
 			{119, "We can appreciate the entire journey by looking back at how far we have come."},
-			{120, "Some things don't have a deeper meaning."},
 			{121, "Obscure problems may require unusual solutions."},
 			{122, "Taking one path often means missing out on another."},
 			{123, "When you return to where you have been, things aren't always as remembered."},
 			{124, "Some choices can leave us running around in circles."},
 			{125, "Raw persistance may be the only option other than giving up entirely."},
-			{127, "Old solutions can apply to new problems."},
 			{128, "Sometimes you need to be carried."},
 			{129, "Life isn't about getting to the end."},
 			{130, "A choice may be as simple as going left or going right."},
 			{131, "Rushing through a problem won't always give the right results."},
 			{133, "The more we complete, the harder it gets to find what we missed."},
-			{134, "The further we explore, the more conencted everything becomes."},
-			{135, "The further we explore, the more conencted everything becomes."},
 			{136, "Solving a problem may require approaching it from a different angle."},
 			{140, "Connecting the pieces can solve a puzzle."},
-			{142, "Peeking behind the curtains lets us see how everything works."},
 			{144, "When you have enough resources, you can start growing more."},
 			{146, "Some events happen whether we want them to or not."},
 			{157, "The problem may not be where you're going but how to get there."},
@@ -138,6 +138,29 @@ namespace AntichamberSaveWatcher
 			{168, "Every journey comes to an end."},
 			{169, "If you don't like where you've ended up try doing something else."}
 		};
+
+		static Trigger()
+		{
+			//Add descriptions for duplicate signs to the main dictionary
+			foreach (Tuple<string, int[]> duplicateTuple in Duplicates)
+				foreach (int num in duplicateTuple.Item2)
+					Signs.Add(num, duplicateTuple.Item1);
+		}
+
+		public static int CountDuplicates(List<int> signNums)
+		{
+			int total = 0;
+
+			foreach (Tuple<string, int[]> duplicateTuple in Duplicates)
+			{
+				int count = signNums.Count(x => duplicateTuple.Item2.Contains(x));
+
+				if (count > 1)
+					total += count - 1;
+			}
+
+			return total;
+		}
 
 		public string FullName { get; private set; }
 		public int SignNum { get; private set; }
