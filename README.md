@@ -3,7 +3,7 @@ Antichamber Save Watcher
 
 Tool for displaying Antichamber save file updates (collected guns, signs, pink cubes) in real time.
 
-A (probably) up-to-date Win32 binary can be downloaded from https://sourceforge.net/projects/antichamber-sw/files/
+A (probably) up-to-date Win32 binary can be downloaded from [the Releases page](https://github.com/Crehl/antichamber-save-watcher/releases).
 
 Usage
 -----
