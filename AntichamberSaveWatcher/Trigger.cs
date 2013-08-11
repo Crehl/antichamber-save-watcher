@@ -7,6 +7,11 @@ namespace AntichamberSaveWatcher
 {
 	class Trigger
 	{
+		public static readonly int[][] DuplicateSigns = {
+			new int[] { 55, 120 },
+			new int[] { 106, 142 }
+		};
+
 		public static Dictionary<int, string> Signs = new Dictionary<int, string>()
 		{
 			{2, "Some outcomes are more favourable than others."},
