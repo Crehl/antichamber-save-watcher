@@ -12,7 +12,7 @@ namespace AntichamberSaveWatcher
 	class Program
 	{
 		static bool customPath = false;
-		static string path = @"C:\Program Files (x86)\Steam\SteamApps\common\Antichamber\Binaries\Win32\";
+		static string path = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + @"\Steam\SteamApps\common\Antichamber\Binaries\Win32\";
 		static string file = "SavedGame.bin";
 		static AntichamberSave save;
 
