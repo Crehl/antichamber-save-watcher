@@ -196,10 +196,7 @@ namespace AntichamberSaveWatcher
 
 				if (trackSigns)
 				{
-					List<int> signNums = new List<int>();
-
-					foreach (Trigger trigger in save.SavedTriggers)
-						signNums.Add(trigger.SignNum);
+					List<int> signNums = save.SavedTriggers.Select(x => x.SignNum).ToList();
 
 					int extraSigns = Trigger.CountDuplicates(signNums);
 					signs -= extraSigns;
@@ -216,12 +213,9 @@ namespace AntichamberSaveWatcher
 
 				if (trackCubes)
 				{
-					List<string> secretNames = new List<string>();
+					List<string> secretNames = save.SavedSecrets.Select(x => x.FullName).ToList();
+
 					int extraCubes = 0;
-
-					foreach (Secret secret in save.SavedSecrets)
-						secretNames.Add(secret.FullName);
-
 					if (secretNames.Contains("HazardSeamless.TheWorld:PersistentLevel.HazardSecretTile_15")) extraCubes++;
 					if (secretNames.Contains("HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardSecretTile_0")) extraCubes++;
 					cubes -= extraCubes;
