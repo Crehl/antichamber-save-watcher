@@ -166,21 +166,13 @@ namespace AntichamberSaveWatcher
 			try
 			{
 				//Store all the previous sign #s...
-				List<int> previousSigns = new List<int>();
-				foreach (Trigger trigger in save.SavedTriggers)
-					if (trigger.SignNum > 0)
-						previousSigns.Add(trigger.SignNum);
+				var previousSigns = save.SavedTriggers.Select(x => x.SignNum).Where(x => x > 0).ToList();
 
 				//... and cube (trigger) names...
-				List<string> previousCubes = new List<string>();
-				foreach (Secret secret in save.SavedSecrets)
-					previousCubes.Add(secret.FullName);
+				var previousCubes = save.SavedSecrets.Select(x => x.FullName).ToList();
 
 				//... and guns.
-				List<Pickup.Gun> previousGuns = new List<Pickup.Gun>();
-				foreach (Pickup pickup in save.SavedPickups)
-					if (pickup.AssociatedGun != Pickup.Gun.Unknown)
-						previousGuns.Add(pickup.AssociatedGun);
+				var previousGuns = save.SavedPickups.Select(x => x.AssociatedGun).Where(x => x != Pickup.Gun.Unknown).ToList();
 
 				//Reload the save file
 				if (!save.Reload(5))
