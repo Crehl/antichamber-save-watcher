@@ -20,6 +20,7 @@ namespace AntichamberSaveWatcher
 		static bool trackSigns = true;
 		static bool trackCubes = false;
 		static bool trackGuns = false;
+		static bool lastSignWasReset = false;
 
 		public static bool ShowDebug = false;
 		
@@ -183,10 +184,11 @@ namespace AntichamberSaveWatcher
 				}
 
 				int signs = previousSigns.Count + 1;
-				if (signs == 1)
+				if (save.SavedTriggers.Count == 0 && !lastSignWasReset)
 				{
 					Console.Clear();
 					Console.WriteLine("00:00:00 - SIGN 1/120 - Every journey is a series of choices. The first is to begin the journey.");
+					lastSignWasReset = true;
 				}
 
 				int cubes = previousCubes.Count;
@@ -206,7 +208,10 @@ namespace AntichamberSaveWatcher
 					foreach (Trigger trigger in save.SavedTriggers)
 					{
 						if (trigger.SignNum > 0 && !previousSigns.Contains(trigger.SignNum))
+						{
 							Console.WriteLine(String.Format("{0} - SIGN {1}/120{3} - {2}", new TimeSpan(0, 0, (int)save.PlayTime), ++signs, trigger.SignText, signExtra));
+							lastSignWasReset = false;
+						}
 						
 					}
 				}
