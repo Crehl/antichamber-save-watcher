@@ -14,13 +14,13 @@ namespace AntichamberSaveWatcher
 
 		public static readonly Tuple<string, int[]>[] Duplicates =
 		{
-			duplicate("Some things don't have a deeper meaning.",						55, 120),
-			duplicate("Peeking behind the curtains lets us see how everything works.",	106, 142),
-			duplicate("The further we explore, the more conencted everything becomes.",	35, 41, 134, 135),
-			duplicate("Some paths are straight forward.",								46, 89),
-			duplicate("Dig a little deeper and you may find something new.",			87, 148, 149, 150, 151, 152, 153, 154),
-			duplicate("Old solutions can apply to new problems.",						105, 107, 126, 127),
-			duplicate("We fall down when there is nothing to support us.",				60, 118)
+			duplicate("Some things don't have a deeper meaning.",                       55, 120),
+			duplicate("Peeking behind the curtains lets us see how everything works.",  106, 142),
+			duplicate("The further we explore, the more conencted everything becomes.", 35, 41, 134, 135),
+			duplicate("Some paths are straight forward.",                               46, 89),
+			duplicate("Dig a little deeper and you may find something new.",            87, 148, 149, 150, 151, 152, 153, 154),
+			duplicate("Old solutions can apply to new problems.",                       105, 107, 126, 127),
+			duplicate("We fall down when there is nothing to support us.",              60, 118)
 		};
 
 		public static Dictionary<int, string> Signs = new Dictionary<int, string>()
