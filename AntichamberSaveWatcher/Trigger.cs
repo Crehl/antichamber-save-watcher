@@ -7,11 +7,6 @@ namespace AntichamberSaveWatcher
 {
 	class Trigger
 	{
-		private static Tuple<string, int[]> duplicate(string desc, params int[] nums)
-		{
-			return new Tuple<string, int[]>(desc, nums);
-		}
-
 		public static readonly Tuple<string, int[]>[] Duplicates =
 		{
 			duplicate("Some things don't have a deeper meaning.",                       55, 120),
@@ -147,21 +142,6 @@ namespace AntichamberSaveWatcher
 					Signs.Add(num, duplicateTuple.Item1);
 		}
 
-		public static int CountDuplicates(List<int> signNums)
-		{
-			int total = 0;
-
-			foreach (Tuple<string, int[]> duplicateTuple in Duplicates)
-			{
-				int count = signNums.Count(x => duplicateTuple.Item2.Contains(x));
-
-				if (count > 1)
-					total += count - 1;
-			}
-
-			return total;
-		}
-
 		public string FullName { get; private set; }
 		public int SignNum { get; private set; }
 		public string SignText { get; private set; }
@@ -188,6 +168,26 @@ namespace AntichamberSaveWatcher
 					SignText = Signs[n];
 				}
 			}
+		}
+
+		public static int CountDuplicates(List<int> signNums)
+		{
+			int total = 0;
+
+			foreach (Tuple<string, int[]> duplicateTuple in Duplicates)
+			{
+				int count = signNums.Count(x => duplicateTuple.Item2.Contains(x));
+
+				if (count > 1)
+					total += count - 1;
+			}
+
+			return total;
+		}
+
+		private static Tuple<string, int[]> duplicate(string desc, params int[] nums)
+		{
+			return new Tuple<string, int[]>(desc, nums);
 		}
 	}
 }
