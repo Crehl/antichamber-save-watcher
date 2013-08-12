@@ -13,16 +13,16 @@ namespace AntichamberSaveWatcher
 		public string Path { get; private set; }
 		private FileStream stream;
 
-		//Total of 8 magic bytes at the start of the file
+		// Total of 8 magic bytes at the start of the file
 		public int MagicOne { get; private set; }
 		public int MagicTwo { get; private set; }
 
-		public float PlayTime { get; private set; } //Play time in seconds
+		public float PlayTime { get; private set; } // Play time in seconds
 		public TimeSpan TimeLeft
 		{
 			get
 			{
-				//Time remaining from the starting 1h30m
+				// Time remaining from the starting 1h30m
 				TimeSpan left = new TimeSpan(1, 30, 0);
 				left = left.Subtract(new TimeSpan(0, 0, (int)PlayTime));
 
@@ -33,9 +33,9 @@ namespace AntichamberSaveWatcher
 			}
 		}
 
-		public List<Pickup> SavedPickups { get; private set; } //Guns
-		public List<Secret> SavedSecrets { get; private set; } //Pink cubes
-		public List<Trigger> SavedTriggers { get; private set; } //Mostly signs, but also other stuff (map rooms?)
+		public List<Pickup> SavedPickups { get; private set; } // Guns
+		public List<Secret> SavedSecrets { get; private set; } // Pink cubes
+		public List<Trigger> SavedTriggers { get; private set; } // Mostly signs, but also other stuff (map rooms?)
 
 		public bool HiddenSignHints { get; private set; }
 
@@ -58,8 +58,7 @@ namespace AntichamberSaveWatcher
 
 		public bool Reload(int retries = 0, int sleepTime = 100)
 		{
-			//After an initial sleep, attempt to read the save file (retries + 1) times every sleepTime milliseconds.
-
+			// After an initial sleep, attempt to read the save file (retries + 1) times every sleepTime milliseconds.
 			Thread.Sleep(50);
 
 			do
@@ -188,8 +187,7 @@ namespace AntichamberSaveWatcher
 
 		private float readFloatProperty()
 		{
-			//IEEE754
-
+			// IEEE754
 			long length = readLittleEndian(8);
 			uint ival = (uint)readLittleEndian(4);
 

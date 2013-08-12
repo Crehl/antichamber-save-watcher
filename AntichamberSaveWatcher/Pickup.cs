@@ -16,14 +16,14 @@ namespace AntichamberSaveWatcher
 			Green,
 			Yellow,
 			Red
-		};
+		}
 
 		static Dictionary<string, Gun> GunNames = new Dictionary<string, Gun>()
 		{
-			{"HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardPickupFactory_0", Gun.Blue},
-			{"HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardPickupFactory_1", Gun.Green},
-			{"HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardPickupFactory_8", Gun.Yellow},
-			{"HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardPickupFactory_3", Gun.Red}
+			{ "HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardPickupFactory_0", Gun.Blue },
+			{ "HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardPickupFactory_1", Gun.Green },
+			{ "HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardPickupFactory_8", Gun.Yellow },
+			{ "HazardIGFChinaSplit.TheWorld:PersistentLevel.HazardPickupFactory_3", Gun.Red }
 		};
 
 		public string FullName { get; private set; }

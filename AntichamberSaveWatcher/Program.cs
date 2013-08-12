@@ -30,7 +30,7 @@ namespace AntichamberSaveWatcher
 			
 			parseArgs(args);
 
-			//If a path wasn't specified in a command line arg, attempt to find one from the running processes
+			// If a path wasn't specified in a command line arg, attempt to find one from the running processes
 			if (!customPath)
 				findPath();
 
@@ -45,12 +45,12 @@ namespace AntichamberSaveWatcher
 
 			save = new AntichamberSave(path + file);
 
-			//Watch the save file for changes
+			// Watch the save file for changes
 			FileSystemWatcher fsw = new FileSystemWatcher(path, file);
 			fsw.Changed += update;
 			fsw.EnableRaisingEvents = true;
 
-			//Quit program on enter
+			// Quit program on enter
 			Console.ReadLine();
 		}
 
@@ -67,9 +67,9 @@ namespace AntichamberSaveWatcher
 			{
 				string next = (i < args.Length - 1) ? args[i + 1] : "";
 
-				if (args[i].Length > 2 && args[i].StartsWith("--")) //e.g. --signs
+				if (args[i].Length > 2 && args[i].StartsWith("--")) // e.g. --signs
 					handleFlag(args[i].Substring(2), next);
-				else if (args[i][0] == '-') //e.g. -s or -sc
+				else if (args[i][0] == '-') // e.g. -s or -sc
 				{
 					for (int j = 1; j < args[i].Length; j++) 
 						handleFlag(args[i].Substring(j, 1), next);
@@ -87,18 +87,22 @@ namespace AntichamberSaveWatcher
 				case "signs":
 					trackSigns = true;
 					break;
+
 				case "c":
 				case "cubes":
 					trackCubes = true;
 					break;
+
 				case "g":
 				case "guns":
 					trackGuns = true;
 					break;
+
 				case "d":
 				case "debug":
 					ShowDebug = true;
 					break;
+
 				case "f":
 				case "file":
 					if (next != "")
@@ -108,6 +112,7 @@ namespace AntichamberSaveWatcher
 						customPath = true;
 					}
 					break;
+
 				case "n":
 				case "no-resize":
 					noResize = true;
@@ -123,7 +128,7 @@ namespace AntichamberSaveWatcher
 
 			foreach (Process process in processes)
 			{
-				//Don't always have permissions to read the FileName for a process
+				// Don't always have permissions to read the FileName for a process
 				try
 				{
 					fullName = process.MainModule.FileName;
@@ -133,7 +138,7 @@ namespace AntichamberSaveWatcher
 					continue;
 				}
 
-				//Antichamber binary
+				// Antichamber binary
 				if (fullName.EndsWith(@"Antichamber\Binaries\Win32\UDK.exe"))
 				{
 					string p = Path.GetDirectoryName(fullName) + Path.DirectorySeparatorChar;
@@ -145,7 +150,7 @@ namespace AntichamberSaveWatcher
 					}
 				}
 				
-				//Steam binary
+				// Steam binary
 				if (fullName.EndsWith(@"Steam\Steam.exe"))
 				{
 					string p = Path.Combine(Path.GetDirectoryName(fullName), "SteamApps", "common", "Antichamber", "Binaries", "Win32") + Path.DirectorySeparatorChar;
@@ -166,16 +171,16 @@ namespace AntichamberSaveWatcher
 		{
 			try
 			{
-				//Store all the previous sign #s...
+				// Store all the previous sign #s...
 				var previousSigns = save.SavedTriggers.Select(x => x.SignNum).Where(x => x > 0).ToList();
 
-				//... and cube (trigger) names...
+				// ... and cube (trigger) names...
 				var previousCubes = save.SavedSecrets.Select(x => x.FullName).ToList();
 
-				//... and guns.
+				// ... and guns.
 				var previousGuns = save.SavedPickups.Select(x => x.AssociatedGun).Where(x => x != Pickup.Gun.Unknown).ToList();
 
-				//Reload the save file
+				// Reload the save file
 				if (!save.Reload(5))
 				{
 					if (ShowDebug)
@@ -193,8 +198,8 @@ namespace AntichamberSaveWatcher
 
 				int cubes = previousCubes.Count;
 
-				//Compare new signs, cubes, etc against the stored previous lists
-				//Write any new things to the console
+				// Compare new signs, cubes, etc against the stored previous lists
+				// Write any new things to the console
 
 				if (trackSigns)
 				{
