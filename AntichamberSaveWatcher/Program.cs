@@ -192,7 +192,7 @@ namespace AntichamberSaveWatcher
 				if (save.SavedTriggers.Count == 0 && !lastSignWasReset)
 				{
 					Console.Clear();
-					Console.WriteLine("00:00:00 - SIGN 1/120 - Every journey is a series of choices. The first is to begin the journey.");
+					Console.Write("00:00:00 - SIGN 1/120 - Every journey is a series of choices. The first is to begin the journey.");
 					lastSignWasReset = true;
 				}
 
@@ -214,7 +214,7 @@ namespace AntichamberSaveWatcher
 					{
 						if (trigger.SignNum > 0 && !previousSigns.Contains(trigger.SignNum))
 						{
-							Console.WriteLine(String.Format("{0} - SIGN {1}/120{3} - {2}", new TimeSpan(0, 0, (int)save.PlayTime), ++signs, trigger.SignText, signExtra));
+							Console.Write(String.Format("\n{0} - SIGN {1}/120{3} - {2}", new TimeSpan(0, 0, (int)save.PlayTime), ++signs, trigger.SignText, signExtra));
 							lastSignWasReset = false;
 						}
 						
@@ -235,7 +235,7 @@ namespace AntichamberSaveWatcher
 					foreach (Secret secret in save.SavedSecrets)
 					{
 						if (!previousCubes.Contains(secret.FullName))
-							Console.WriteLine(String.Format("{0} - PINK CUBE {1}/13{2}", new TimeSpan(0, 0, (int)save.PlayTime), ++cubes, cubeExtra));
+							Console.Write(String.Format("\n{0} - PINK CUBE {1}/13{2}", new TimeSpan(0, 0, (int)save.PlayTime), ++cubes, cubeExtra));
 					}
 				}
 
@@ -243,7 +243,7 @@ namespace AntichamberSaveWatcher
 				{
 					foreach (Pickup pickup in save.SavedPickups)
 						if (pickup.AssociatedGun != Pickup.Gun.Unknown && !previousGuns.Contains(pickup.AssociatedGun))
-							Console.WriteLine(String.Format("{0} - GUN: {1}", new TimeSpan(0, 0, (int)save.PlayTime), pickup.AssociatedGun.ToString()));
+							Console.Write(String.Format("\n{0} - GUN: {1}", new TimeSpan(0, 0, (int)save.PlayTime), pickup.AssociatedGun.ToString()));
 				}
 			}
 			catch (Exception exc)
