@@ -50,8 +50,10 @@ namespace AntichamberSaveWatcher
 			fsw.Changed += update;
 			fsw.EnableRaisingEvents = true;
 
-			// Quit program on enter
-			Console.ReadLine();
+			//Swallow all keypresses
+			//TODO: Set a key to quit?
+			while (true)
+				Console.ReadKey(true);
 		}
 
 		static void parseArgs(string[] args)
