@@ -34,8 +34,9 @@ namespace AntichamberSaveWatcher
 
             setupConsole();
 
-			if (!trackCubes && !trackSigns && !trackGuns)
-				Console.WriteLine("Currently tracking nothing - are the command line arguments correct?");
+            // If we aren't set up to track anything, ask the user what they want
+            if (!trackCubes && !trackSigns && !trackGuns)
+                showPrompts();
 
 			save = new AntichamberSave(path + file);
 
@@ -84,6 +85,15 @@ namespace AntichamberSaveWatcher
                         break;
                 }
             }
+        }
+
+        static void showPrompts()
+        {
+            trackSigns = inputPrompt("Track signs?");
+            trackGuns = inputPrompt("Track guns?");
+            trackCubes = inputPrompt("Track pink cubes?");
+
+            Console.Clear();
         }
 
 		static void parseArgs(string[] args)
