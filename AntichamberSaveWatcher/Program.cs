@@ -26,6 +26,11 @@ namespace AntichamberSaveWatcher
 		
 		static void Main(string[] args)
 		{
+            //Try to load a config file
+            if (File.Exists(IniFile.EXE + ".ini"))
+                loadConfig();
+
+            //Read command-line args
 			parseArgs(args);
 
 			// If a path wasn't specified in a command line arg, attempt to find one from the running processes
@@ -50,6 +55,26 @@ namespace AntichamberSaveWatcher
 			while (true)
 				Console.ReadKey(true);
 		}
+
+        static void loadConfig()
+        {
+            IniFile iniFile = new IniFile();
+
+            string p = iniFile.Read("Path");
+            if (p != "")
+            {
+                path = p;
+                customPath = true;
+            }
+
+            string guns = iniFile.Read("TrackGuns");
+            string signs = iniFile.Read("TrackSigns");
+            string cubes = iniFile.Read("TrackCubes");
+
+            bool.TryParse(guns, out trackGuns);
+            bool.TryParse(signs, out trackSigns);
+            bool.TryParse(cubes, out trackCubes);
+        }
 
         static void setupConsole()
         {
