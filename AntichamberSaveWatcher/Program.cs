@@ -26,19 +26,13 @@ namespace AntichamberSaveWatcher
 		
 		static void Main(string[] args)
 		{
-			Console.CursorVisible = false;
-			
 			parseArgs(args);
 
 			// If a path wasn't specified in a command line arg, attempt to find one from the running processes
 			if (!customPath)
 				findPath();
 
-			if (!noResize)
-			{
-				Console.SetBufferSize(115, 150);
-				Console.SetWindowSize(115, 8);
-			}
+            setupConsole();
 
 			if (!trackCubes && !trackSigns && !trackGuns)
 				Console.WriteLine("Currently tracking nothing - are the command line arguments correct?");
@@ -50,11 +44,22 @@ namespace AntichamberSaveWatcher
 			fsw.Changed += update;
 			fsw.EnableRaisingEvents = true;
 
-			//Swallow all keypresses
-			//TODO: Set a key to quit?
+			// Swallow all keypresses
+			// TODO: Set a key to quit?
 			while (true)
 				Console.ReadKey(true);
 		}
+
+        static void setupConsole()
+        {
+            Console.CursorVisible = false;
+
+            if (!noResize)
+            {
+                Console.SetBufferSize(115, 150);
+                Console.SetWindowSize(115, 8);
+            }
+        }
 
 		static void parseArgs(string[] args)
 		{
