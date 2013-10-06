@@ -17,7 +17,7 @@ namespace AntichamberSaveWatcher
 		static AntichamberSave save;
 
 		static bool noResize = false;
-		static bool trackSigns = true;
+		static bool trackSigns = false;
 		static bool trackCubes = false;
 		static bool trackGuns = false;
 		static bool lastSignWasReset = false;
