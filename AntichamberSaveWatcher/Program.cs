@@ -61,6 +61,31 @@ namespace AntichamberSaveWatcher
             }
         }
 
+        static bool inputPrompt(string message)
+        {
+            Console.WriteLine("{0} [yn]: ", message);
+            while (true)
+            {
+                ConsoleKeyInfo c = Console.ReadKey(true);
+
+                switch (c.KeyChar)
+                {
+                    case 'y':
+                    case 'Y':
+                        Console.WriteLine(c.KeyChar);
+                        return true;
+
+                    case 'n':
+                    case 'N':
+                        Console.WriteLine(c.KeyChar);
+                        return false;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
 		static void parseArgs(string[] args)
 		{
 			if (args.Length > 0)
