@@ -63,7 +63,7 @@ namespace AntichamberSaveWatcher
 
         static bool inputPrompt(string message)
         {
-            Console.WriteLine("{0} [yn]: ", message);
+            Console.Write("{0} [yn]: ", message);
             while (true)
             {
                 ConsoleKeyInfo c = Console.ReadKey(true);
