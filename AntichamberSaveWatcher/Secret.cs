@@ -5,13 +5,13 @@ using System.Text;
 
 namespace AntichamberSaveWatcher
 {
-	class Secret
-	{
-		public string FullName { get; private set; }
+    class Secret
+    {
+        public string FullName { get; private set; }
 
-		public Secret(string name)
-		{
-			FullName = name;
-		}
-	}
+        public Secret(string name)
+        {
+            FullName = name;
+        }
+    }
 }
