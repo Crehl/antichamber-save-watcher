@@ -259,7 +259,7 @@ namespace AntichamberSaveWatcher
                 if (save.SavedTriggers.Count == 0 && !lastSignWasReset)
                 {
                     Console.Clear();
-                    Console.Write("00:00:00 - SIGN 1/120 - Every journey is a series of choices. The first is to begin the journey.");
+                    prettyPrint("00:00:00 - SIGN 1/120 - Every journey is a series of choices. The first is to begin the journey.");
                     lastSignWasReset = true;
                 }
 
@@ -281,7 +281,7 @@ namespace AntichamberSaveWatcher
                     {
                         if (trigger.SignNum > 0 && !previousSigns.Contains(trigger.SignNum))
                         {
-                            Console.Write(String.Format("\n{0} - SIGN {1}/120{3} - {2}", new TimeSpan(0, 0, (int)save.PlayTime), ++signs, trigger.SignText, signExtra));
+                            prettyPrint("\n{0} - SIGN {1}/120{3} - {2}", new TimeSpan(0, 0, (int)save.PlayTime), ++signs, trigger.SignText, signExtra);
                             lastSignWasReset = false;
                         }
                         
@@ -302,7 +302,7 @@ namespace AntichamberSaveWatcher
                     foreach (Secret secret in save.SavedSecrets)
                     {
                         if (!previousCubes.Contains(secret.FullName))
-                            Console.Write(String.Format("\n{0} - PINK CUBE {1}/13{2}", new TimeSpan(0, 0, (int)save.PlayTime), ++cubes, cubeExtra));
+                            prettyPrint("\n{0} - PINK CUBE {1}/13{2}", new TimeSpan(0, 0, (int)save.PlayTime), ++cubes, cubeExtra);
                     }
                 }
 
@@ -310,7 +310,7 @@ namespace AntichamberSaveWatcher
                 {
                     foreach (Pickup pickup in save.SavedPickups)
                         if (pickup.AssociatedGun != Pickup.Gun.Unknown && !previousGuns.Contains(pickup.AssociatedGun))
-                            Console.Write(String.Format("\n{0} - GUN: {1}", new TimeSpan(0, 0, (int)save.PlayTime), pickup.AssociatedGun.ToString()));
+                            prettyPrint("\n{0} - GUN: {1}", new TimeSpan(0, 0, (int)save.PlayTime), pickup.AssociatedGun.ToString());
                 }
             }
             catch (Exception exc)
@@ -318,6 +318,33 @@ namespace AntichamberSaveWatcher
                 if (Program.ShowDebug)
                     Console.WriteLine(exc.StackTrace);
             }
+        }
+
+        private static void prettyPrint(string format, params object[] args)
+        {
+            string msg = String.Format(format, args);
+
+            // This will cause issues if multiple adjacent spaces are ever used (e.g. for alignment)
+            // TODO: handle multiple adjacent spaces properly
+            string[] split = msg.Trim().Split(' ');
+
+            int chars = Console.BufferWidth;
+            string sep = "";
+
+            foreach (string word in split)
+            {
+                if (word.Length >= chars)
+                {
+                    Console.Write("\n   ");
+                    chars = Console.BufferWidth - 3;
+                }
+
+                Console.Write(sep + word);
+                chars -= (sep.Length + word.Length);
+                sep = " ";
+            }
+
+            Console.WriteLine();
         }
     }
 }
