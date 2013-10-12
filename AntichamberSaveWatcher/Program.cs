@@ -82,8 +82,8 @@ namespace AntichamberSaveWatcher
 
             if (!noResize)
             {
-                Console.SetBufferSize(115, 150);
-                Console.SetWindowSize(115, 8);
+                Console.SetBufferSize(100, 150);
+                Console.SetWindowSize(100, 6);
             }
         }
 
