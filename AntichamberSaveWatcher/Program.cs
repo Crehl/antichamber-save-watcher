@@ -335,7 +335,10 @@ namespace AntichamberSaveWatcher
             {
                 if (word.Length >= chars)
                 {
-                    Console.Write("\n   ");
+                    if (chars > 0)
+                        Console.WriteLine();
+
+                    Console.Write("   ");
                     chars = Console.BufferWidth - 3;
                 }
 
@@ -344,7 +347,8 @@ namespace AntichamberSaveWatcher
                 sep = " ";
             }
 
-            Console.WriteLine();
+            if (chars > 0)
+                Console.WriteLine();
         }
     }
 }
