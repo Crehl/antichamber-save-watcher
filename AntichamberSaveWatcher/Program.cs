@@ -67,13 +67,15 @@ namespace AntichamberSaveWatcher
                 customPath = true;
             }
 
-            string guns = iniFile.Read("TrackGuns");
-            string signs = iniFile.Read("TrackSigns");
-            string cubes = iniFile.Read("TrackCubes");
+            tryParseConfig(iniFile, "TrackGuns", out trackGuns);
+            tryParseConfig(iniFile, "TrackSigns", out trackSigns);
+            tryParseConfig(iniFile, "TrackCubes", out trackCubes);
+        }
 
-            bool.TryParse(guns, out trackGuns);
-            bool.TryParse(signs, out trackSigns);
-            bool.TryParse(cubes, out trackCubes);
+        static bool tryParseConfig(IniFile iniFile, string property, out bool output)
+        {
+            string prop = iniFile.Read(property);
+            return bool.TryParse(prop, out output);
         }
 
         static void setupConsole()
