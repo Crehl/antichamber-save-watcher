@@ -8,7 +8,26 @@ A (probably) up-to-date Win32 binary can be downloaded from [the Releases page](
 Usage
 -----
 
-While you can run ASW with now command line arguments, it is recommended you specify the exact flags and (optionally) the path to Antichamber's save file you need.
+ASW can now be configure in three ways:
+* **Automatically** ``(recommended)`` - Just run it. If you have Steam or Antichamber running already, it'll find the path to the save file automatically. It will also prompt you for what you want to track - just press 'y' or 'n' and everything wil get setup.
+
+* **Configuration file** - ASW will attempt to load configuration from a file named ``AntichamberSaveWatcher.ini``. If you create this file you can specify a path and what to track without having to do this every time you run it (unlike above). See below for an example configuration file.
+
+* **Command line arguments** - You can pass several arguments into ASW through something such as a shortcut or straight form the command line. See below for a full list.
+
+Example config file
+-------------------
+This is just an example. You don't need to specify everything, though this file has.
+
+    [AntichamberSaveWatcher]
+    Path=H:\Steam\SteamApps\common\Antichamber\Binaries\Win32\
+    TrackSigns=true
+    TrackGuns=false
+    TrackCubes=false
+
+Command line arguments
+----------------------
+
 Single letter arguments can be combined into one, e.g. ``-s -c -f "path"`` is equivalent to ``-scf "path"``.
 The possible arguments are as follows:
 
