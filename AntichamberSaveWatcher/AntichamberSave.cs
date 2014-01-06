@@ -187,20 +187,10 @@ namespace AntichamberSaveWatcher
 
         private float readFloatProperty()
         {
-            // IEEE754
-            long length = readLittleEndian(8);
-            uint ival = (uint)readLittleEndian(4);
-
-            uint fraction = ival & ((1 << 23) - 1);
-            ival >>= 23;
-
-            uint exponent = ival & ((1 << 8) - 1);
-            ival >>= 8;
-
-            uint sign = ival & 1;
-
-            double val = Math.Pow(-1, sign) * (Math.Pow(2, exponent - 127) * ((double)fraction / Math.Pow(2, 23) + 1));
-            return (float)val;
+            stream.Seek(8, SeekOrigin.Current);
+            byte[] fbytes = new byte[4];
+            stream.Read(fbytes, 0, 4);
+            return System.BitConverter.ToSingle(fbytes, 0);
         }
     }
 }
